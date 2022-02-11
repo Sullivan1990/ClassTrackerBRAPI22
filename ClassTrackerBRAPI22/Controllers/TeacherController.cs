@@ -22,16 +22,26 @@ namespace ClassTrackerBRAPI22.Controllers
 
         // GET: api/<TeacherController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Teacher> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _context.Teachers;
         }
 
         // GET api/<TeacherController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Teacher> Get(int id)
         {
-            return "value";
+            var teacher = _context.Teachers.Find(id);
+
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+            return teacher;
+
+            // Ternary statement ? :
+
+            //return teacher == null ? NotFound() : teacher;
         }
 
         // POST api/<TeacherController>

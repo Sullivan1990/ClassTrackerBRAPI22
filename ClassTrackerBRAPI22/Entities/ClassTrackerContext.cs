@@ -18,6 +18,10 @@ namespace ClassTrackerBRAPI22.Entities
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Teacher>().HasData(
+                new Teacher { TeacherId = 1, Name = "Steve", Email = "Steve@email.com", Phone = "1234123412" },
+                new Teacher { TeacherId = 2, Name = "Jennifer", Email = "Jennifer@email.com", Phone = "5432234523" }
+            );
         }
     }
 }
