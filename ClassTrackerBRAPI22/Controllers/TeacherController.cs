@@ -39,15 +39,21 @@ namespace ClassTrackerBRAPI22.Controllers
             }
             return teacher;
 
-            // Ternary statement ? :
-
-            //return teacher == null ? NotFound() : teacher;
         }
 
         // POST api/<TeacherController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Teacher> Post(Teacher teacher)
         {
+            if(teacher == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Teachers.Add(teacher);
+            _context.SaveChanges();
+
+            return CreatedAtAction("Post", teacher);
         }
 
         // PUT api/<TeacherController>/5
