@@ -12,6 +12,6 @@ namespace ClassTrackerBRAPI22.DTO
         public string Location { get; set; }
         public DateTime? StartTime { get; set; }
         public int? DurationMinutes { get; set; }
-        public int TeacherId { get; set; }
+        public int? TeacherId { get; set; }
     }
 }

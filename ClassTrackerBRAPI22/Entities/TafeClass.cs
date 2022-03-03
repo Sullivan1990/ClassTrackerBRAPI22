@@ -16,11 +16,11 @@ namespace ClassTrackerBRAPI22.Entities
 
         // Foreign Key
 
-        public int TeacherId { get; set; }
+        public int? TeacherId { get; set; }
 
         // Navigation Properties
 
-        public Teacher Teacher { get; set; }
+        public Teacher? Teacher { get; set; }
         public ICollection<Unit> Units { get; set; }
     }
 }

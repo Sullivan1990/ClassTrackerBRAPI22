@@ -13,9 +13,9 @@ namespace ClassTrackerBRAPI22.Entities
         public string Description { get; set; }
 
         // Foreign Key
-        public int TafeClassId { get; set; }
+        public int? TafeClassId { get; set; }
 
         // Navigation Properties
-        public TafeClass TafeClass { get; set; }
+        public TafeClass? TafeClass { get; set; }
     }
 }

@@ -42,6 +42,26 @@ namespace ClassTrackerBRAPI22.Controllers
 
         }
 
+        /// <summary>
+        /// Return a list of Units that have a foreign key that matches the provided id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetForParentId")]
+        public ActionResult<List<Unit>> GetForParentId(int id)
+        {
+            var units = _context.Units.Where(c => c.TafeClassId == id)
+                                           .ToList();
+
+            if (units == null)
+            {
+                return NotFound();
+            }
+            return units;
+
+        }
+
         // POST api/<UnitController>
         [HttpPost]
         public ActionResult<Unit> Post(Unit unit)

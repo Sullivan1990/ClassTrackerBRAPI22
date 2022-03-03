@@ -1,5 +1,6 @@
 ﻿using ClassTrackerBRAPI22.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,22 @@ namespace ClassTrackerBRAPI22.Controllers
         public ActionResult<Teacher> Get(int id)
         {
             var teacher = _context.Teachers.Find(id);
+
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+            return teacher;
+
+        }
+
+        [HttpGet]
+        [Route("GetWithChildren")]
+        public ActionResult<Teacher> GetWithChildren(int id)
+        {
+            var teacher = _context.Teachers.Where(c => c.TeacherId == id)
+                                           .Include(c => c.TafeClasses)
+                                           .FirstOrDefault();
 
             if (teacher == null)
             {
