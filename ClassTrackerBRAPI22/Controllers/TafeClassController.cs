@@ -15,12 +15,18 @@ namespace ClassTrackerBRAPI22.Controllers
     public class TafeClassController : ControllerBase
     {
 
+        #region Setup
+
         private readonly ClassTrackerContext _context;
 
         public TafeClassController(ClassTrackerContext context)
         {
             _context = context;
         }
+
+        #endregion
+
+        #region CRUD Endpoints
 
         // GET: api/<TafeClassController>
         [HttpGet]
@@ -73,14 +79,52 @@ namespace ClassTrackerBRAPI22.Controllers
 
         // PUT api/<TafeClassController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<TafeClass> Put(int id, [FromBody] TafeClass tafeClass)
         {
+            if (id != tafeClass.TafeClassId)
+            {
+                return BadRequest();
+            }
+
+            _context.TafeClasses.Update(tafeClass);
+            _context.SaveChanges();
+            
+            return Ok(tafeClass);
         }
 
         // DELETE api/<TafeClassController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var tafeClass = _context.TafeClasses.Find(id);
+
+            if(tafeClass != null)
+            {
+                _context.TafeClasses.Remove(tafeClass);
+                _context.SaveChanges();
+                return Ok();
+            }
+
+            return NotFound();
         }
+
+        #endregion
+
+        #region Custom Endpoints
+
+        /// <summary>
+        /// Get all Tafeclasses for a given TeacherID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("TafeClassesForTeacherId")]
+        public ActionResult TafeClassesForTeacherId(int id)
+        {
+            return Ok(_context.TafeClasses.Where(c => c.TeacherId == id));
+        }
+
+        #endregion
+
     }
 }
