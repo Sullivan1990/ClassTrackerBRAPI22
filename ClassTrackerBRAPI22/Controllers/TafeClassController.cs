@@ -118,7 +118,7 @@ namespace ClassTrackerBRAPI22.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("TafeClassesForTeacherId")]
+        [Route("TafeClassesForTeacherId/{id}")]
         public ActionResult TafeClassesForTeacherId(int id)
         {
             return Ok(_context.TafeClasses.Where(c => c.TeacherId == id));

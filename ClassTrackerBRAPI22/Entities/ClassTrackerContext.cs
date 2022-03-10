@@ -15,6 +15,8 @@ namespace ClassTrackerBRAPI22.Entities
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TafeClass> TafeClasses { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<UserInfo> Users { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
