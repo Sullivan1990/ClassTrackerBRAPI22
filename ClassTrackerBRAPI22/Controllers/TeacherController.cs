@@ -1,4 +1,5 @@
 ﻿using ClassTrackerBRAPI22.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace ClassTrackerBRAPI22.Controllers
         #region CRUD Endpoints
 
         // GET: api/<TeacherController>
+        [Authorize]
         [HttpGet]
         public IEnumerable<Teacher> Get()
         {
