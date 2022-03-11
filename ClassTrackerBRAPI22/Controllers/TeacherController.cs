@@ -13,12 +13,19 @@ namespace ClassTrackerBRAPI22.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
+
+        #region Setup
+
         private readonly ClassTrackerContext _context;
 
         public TeacherController(ClassTrackerContext context)
         {
             _context = context;
         }
+
+        #endregion
+
+        #region CRUD Endpoints
 
         // GET: api/<TeacherController>
         [HttpGet]
@@ -45,7 +52,7 @@ namespace ClassTrackerBRAPI22.Controllers
         [HttpPost]
         public ActionResult<Teacher> Post(Teacher teacher)
         {
-            if(teacher == null)
+            if (teacher == null)
             {
                 return BadRequest();
             }
@@ -58,14 +65,37 @@ namespace ClassTrackerBRAPI22.Controllers
 
         // PUT api/<TeacherController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<Teacher> Put(int id, [FromBody] Teacher teacher)
         {
+            if (id != teacher.TeacherId)
+            {
+                return BadRequest();
+            }
+
+            _context.Teachers.Update(teacher);
+            _context.SaveChanges();
+
+            return Ok(teacher);
         }
 
         // DELETE api/<TeacherController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var teacher = _context.Teachers.Find(id);
+
+            if (teacher != null)
+            {
+                _context.Teachers.Remove(teacher);
+                _context.SaveChanges();
+                return Ok();
+            }
+
+            return NotFound();
+
         }
+
+        #endregion
+
     }
 }

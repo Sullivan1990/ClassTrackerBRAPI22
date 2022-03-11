@@ -14,12 +14,18 @@ namespace ClassTrackerBRAPI22.Controllers
     public class UnitController : ControllerBase
     {
 
+        #region Setup
+
         private readonly ClassTrackerContext _context;
 
         public UnitController(ClassTrackerContext context)
         {
             _context = context;
         }
+
+        #endregion
+
+        #region CRUD Endpoints
 
         // GET: api/<UnitController>
         [HttpGet]
@@ -59,14 +65,56 @@ namespace ClassTrackerBRAPI22.Controllers
 
         // PUT api/<UnitController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<Unit> Put(int id, [FromBody] Unit unit)
         {
+            if (id != unit.UnitId)
+            {
+                return BadRequest();
+            }
+
+            _context.Units.Update(unit);
+            _context.SaveChanges();
+
+            return Ok(unit);
         }
 
         // DELETE api/<UnitController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var unit = _context.Units.Find(id);
+
+            if (unit != null)
+            {
+                _context.Units.Remove(unit);
+                _context.SaveChanges();
+                return Ok();
+            }
+
+            return NotFound();
         }
+
+        #endregion
+
+        #region Custom Endpoints
+
+        /// <summary>
+        /// Get all units for a given TafeClass Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("UnitsForTafeClassId")]
+        public ActionResult UnitsForTafeClassId(int id)
+        {
+            return Ok(_context.Units.Where(c => c.TafeClassId == id));
+        }
+
+        #endregion
+
+
+
+
+
     }
 }
