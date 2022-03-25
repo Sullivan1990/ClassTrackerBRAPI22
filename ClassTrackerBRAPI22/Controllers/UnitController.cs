@@ -1,4 +1,5 @@
 ﻿using ClassTrackerBRAPI22.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,7 @@ namespace ClassTrackerBRAPI22.Controllers
         }
 
         // PUT api/<UnitController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<Unit> Put(int id, [FromBody] Unit unit)
         {
@@ -79,6 +81,7 @@ namespace ClassTrackerBRAPI22.Controllers
         }
 
         // DELETE api/<UnitController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {

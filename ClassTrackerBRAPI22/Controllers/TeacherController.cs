@@ -29,7 +29,7 @@ namespace ClassTrackerBRAPI22.Controllers
         #region CRUD Endpoints
 
         // GET: api/<TeacherController>
-        [Authorize]
+        
         [HttpGet]
         public IEnumerable<Teacher> Get()
         {
@@ -66,6 +66,7 @@ namespace ClassTrackerBRAPI22.Controllers
         }
 
         // PUT api/<TeacherController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<Teacher> Put(int id, [FromBody] Teacher teacher)
         {
@@ -81,6 +82,7 @@ namespace ClassTrackerBRAPI22.Controllers
         }
 
         // DELETE api/<TeacherController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
