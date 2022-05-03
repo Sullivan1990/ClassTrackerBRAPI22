@@ -18,6 +18,7 @@ using ClassTrackerBRAPI22.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ClassTrackerBRAPI22.DTO;
 
 namespace ClassTrackerBRAPI22
 {
@@ -33,6 +34,8 @@ namespace ClassTrackerBRAPI22
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Settings>(Configuration.GetSection("Settings"));
+
             services.AddDbContext<ClassTrackerContext>(c => c.UseSqlServer(Configuration.GetConnectionString("ClassTrackerSqlServer")));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opts =>
@@ -52,6 +55,7 @@ namespace ClassTrackerBRAPI22
             
 
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClassTrackerBRAPI22", Version = "v1" });
@@ -59,14 +63,20 @@ namespace ClassTrackerBRAPI22
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ClassTrackerContext context)
         {
-            if (env.IsDevelopment())
-            {
+            //// if the application cannot connect to the database, attempt to apply the latest migration to the database
+            //if (!context.Database.CanConnect())
+            //{
+            //    context.Database.Migrate();
+            //}
+
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClassTrackerBRAPI22 v1"));
-            }
+            //}
 
             app.UseHttpsRedirection();
 
