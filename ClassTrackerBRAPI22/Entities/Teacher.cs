@@ -12,6 +12,8 @@ namespace ClassTrackerBRAPI22.Entities
         public string Email { get; set; }
         public string Phone { get; set; }
 
+        //public DateTime Hired { get; set; }
+
         // Navigation Properties
         public ICollection<TafeClass> TafeClasses { get; set; }
     }

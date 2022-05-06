@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using ClassTrackerBRAPI22.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -59,14 +61,20 @@ namespace ClassTrackerBRAPI22
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ClassTrackerContext context)
         {
-            if (env.IsDevelopment())
+
+            if (!context.Database.GetService<IRelationalDatabaseCreator>().HasTables())
             {
+                context.Database.Migrate();
+            }
+
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClassTrackerBRAPI22 v1"));
-            }
+            //}
 
             app.UseHttpsRedirection();
 
