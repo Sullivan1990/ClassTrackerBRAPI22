@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClassTrackerBRAPI22</name>
+    </assembly>
+    <members>
+        <member name="M:ClassTrackerBRAPI22.Controllers.TafeClassController.Get">
+            <summary>
+            An unfiltered list of tafeclasses
+            </summary>
+            <returns>An unfiltered list of tafeclasses</returns>
+        </member>
+        <member name="M:ClassTrackerBRAPI22.Controllers.TafeClassController.TafeClassesForTeacherId(System.Int32)">
+            <summary>
+            Get all Tafeclasses for a given TeacherID
+            </summary>
+            <param name="id">Teacher ID</param>
+        </member>
+        <member name="M:ClassTrackerBRAPI22.Controllers.UnitController.UnitsForTafeClassId(System.Int32)">
+            <summary>
+            Get all units for a given TafeClass Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

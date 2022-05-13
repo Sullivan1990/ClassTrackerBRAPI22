@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -20,6 +19,9 @@ using ClassTrackerBRAPI22.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace ClassTrackerBRAPI22
 {
@@ -51,12 +53,20 @@ namespace ClassTrackerBRAPI22
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))     
                 };                
             });
-            
 
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(opts => opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClassTrackerBRAPI22", Version = "v1" });
+
+
+                var workingDirectory = AppContext.BaseDirectory;
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+
+                c.IncludeXmlComments(Path.Combine(workingDirectory, xmlFile));
+
             });
         }
 

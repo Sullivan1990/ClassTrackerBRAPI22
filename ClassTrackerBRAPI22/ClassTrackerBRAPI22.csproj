@@ -5,6 +5,12 @@
     <UserSecretsId>92d41fd6-399c-4e74-ba2e-a603776fdaf3</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Student\Source\Repos\ClassTrackerBRAPI22\ClassTrackerBRAPI22\ClassTrackerBRAPI22.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <WarningsAsErrors>;NU1605;</WarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Models\**" />
     <Content Remove="Models\**" />
@@ -14,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.13">

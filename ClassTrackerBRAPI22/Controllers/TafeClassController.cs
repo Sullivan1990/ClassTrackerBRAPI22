@@ -2,6 +2,7 @@
 using ClassTrackerBRAPI22.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +30,14 @@ namespace ClassTrackerBRAPI22.Controllers
 
         #region CRUD Endpoints
 
-        // GET: api/<TafeClassController>
+        /// <summary>
+        /// An unfiltered list of tafeclasses
+        /// </summary>
+        /// <returns>An unfiltered list of tafeclasses</returns>
         [HttpGet]
         public IEnumerable<TafeClass> Get()
         {
-            return _context.TafeClasses;
+            return _context.TafeClasses.Include(c => c.Teacher);
         }
 
         // GET api/<TafeClassController>/5
@@ -118,13 +122,12 @@ namespace ClassTrackerBRAPI22.Controllers
         /// <summary>
         /// Get all Tafeclasses for a given TeacherID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Teacher ID</param>
         [HttpGet]
-        [Route("TafeClassesForTeacherId")]
-        public ActionResult TafeClassesForTeacherId(int id)
+        [Route("TafeClassesForTeacherId/{id}")]
+        public ActionResult TafeClassesForTeacherId([FromRoute] int id)
         {
-            return Ok(_context.TafeClasses.Where(c => c.TeacherId == id));
+            return Ok(_context.TafeClasses.Where(c => c.TeacherId == id).Include(c => c.Teacher));
         }
 
         #endregion

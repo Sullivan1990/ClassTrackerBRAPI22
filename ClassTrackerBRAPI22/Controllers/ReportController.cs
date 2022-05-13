@@ -16,6 +16,7 @@ namespace ClassTrackerBRAPI22.Controllers
     {
         // Constructor injection to provide access to database
         private readonly ClassTrackerContext _context;
+
         public ReportController(ClassTrackerContext context)
         {
             _context = context;
@@ -26,7 +27,7 @@ namespace ClassTrackerBRAPI22.Controllers
         {
 
             var teachers = _context.Teachers.Include(c => c.TafeClasses);
-
+            
             //if(from != null)
             //{
             //    teachers.Where(c => c.Hired > from);
